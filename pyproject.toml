@@ -1,0 +1,33 @@
+[project]
+# UPDATE THIS BEFORE PUBLISHING
+name = "toolkit"
+description = "Author"
+authors = [{ name = "Joshua T. S. Hewson", email = "joshua_hewson@brown.edu" }]
+dynamic = ["version"]
+
+readme = "README.md"
+license = { text = "MIT license" }
+requires-python = ">=3.8,<4"
+
+# ADD NEW DEPENDENCIES HERE
+dependencies = [
+    "autora-core",
+    "scikit-learn",
+]
+
+[project.optional-dependencies]
+dev = [
+    "autora-core[dev]"
+]
+
+[project.urls]
+homepage = "http://www.empiricalresearch.ai"
+repository = ""
+documentation = "https://autoresearch.github.io/autora/"
+
+
+[build-system]
+requires = ["setuptools", "setuptools_scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
