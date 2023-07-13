@@ -1,6 +1,6 @@
 [project]
 # UPDATE THIS BEFORE PUBLISHING
-name = "toolkit"
+name = "autora-theorist-toolkit"
 description = "Toolkit to build algorithms for model recovery"
 authors = [{ name = "Joshua T. S. Hewson", email = "joshua_hewson@brown.edu" }]
 dynamic = ["version"]
@@ -13,6 +13,11 @@ requires-python = ">=3.8,<4"
 dependencies = [
     "autora-core",
     "scikit-learn",
+    "numpy",
+    "scipy",
+    "tqdm",
+    "pandas",
+    "sympy"
 ]
 
 [project.optional-dependencies]

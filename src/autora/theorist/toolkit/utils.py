@@ -1,8 +1,4 @@
 import random
-from src.autora.theorist.toolkit.methods.fitting import FittingError
-import warnings
-import functools
-from sympy import sympify
 
 ##################
 #       Functions

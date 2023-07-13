@@ -8,7 +8,6 @@ from typing import List
 from copy import deepcopy
 import pandas as pd
 import random
-from scipy.optimize import OptimizeWarning
 
 from src.autora.theorist.toolkit.components.nodes import Variable, Parameter, Operator
 from src.autora.theorist.toolkit.components.primitives import default_primitives
