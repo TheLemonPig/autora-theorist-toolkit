@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.metrics import mean_squared_error
+from sklearn.base import BaseEstimator
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from inspect import signature
@@ -8,18 +9,17 @@ from copy import deepcopy
 import pandas as pd
 import random
 from scipy.optimize import OptimizeWarning
-import warnings
 
 from src.autora.theorist.toolkit.components.nodes import Variable, Parameter, Operator
 from src.autora.theorist.toolkit.components.primitives import default_primitives
 from src.autora.theorist.toolkit.models.tree import Tree
 from src.autora.theorist.toolkit.models.memory import Stack
 from src.autora.theorist.toolkit.methods.fitting import scipy_curve_fit
-from src.autora.theorist.toolkit.utils import regression_handler, canonical
+from src.autora.theorist.toolkit.methods.regression import regression_handler, canonical
 from src.autora.theorist.toolkit.methods.rules import less_than
 
 
-class SymbolicRegressor:
+class SymbolicRegressor(BaseEstimator):
 
     # TODO: replace tree=None with expression=None once build_tree() is made
     def __init__(self, tree=None, moves=None, primitives=None,
@@ -40,8 +40,14 @@ class SymbolicRegressor:
         self._history = []
         self._visit_list = set()
         self._error = np.inf
-        warnings.filterwarnings("ignore", category=OptimizeWarning)
-        warnings.filterwarnings("ignore", category=RuntimeWarning)
+
+    def __repr__(self, N_CHAR_MAX=None):
+        if N_CHAR_MAX is None:
+            # Symbolic Regressor __repr__ method
+            return self.model_.__repr__()
+        else:
+            # Sci-kit Learn __repr__ method
+            super().__repr__(N_CHAR_MAX)
 
     def load_data(self, x, y):
         if isinstance(x, pd.DataFrame) and isinstance(y, pd.DataFrame):
@@ -250,3 +256,10 @@ class SymbolicRegressor:
             else:
                 raise ValueError('Invalid data-type for X-variable')
         return str_repr
+
+
+if __name__ == '__main__':
+    model = SymbolicRegressor()
+    for _ in range(30):
+        model.step()
+    print(model.model_)

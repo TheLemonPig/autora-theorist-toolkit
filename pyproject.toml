@@ -1,7 +1,7 @@
 [project]
 # UPDATE THIS BEFORE PUBLISHING
 name = "toolkit"
-description = "Author"
+description = "Toolkit to build algorithms for model recovery"
 authors = [{ name = "Joshua T. S. Hewson", email = "joshua_hewson@brown.edu" }]
 dynamic = ["version"]
 
