@@ -9,13 +9,13 @@ from copy import deepcopy
 import pandas as pd
 import random
 
-from src.autora.theorist.toolkit.components.nodes import Variable, Parameter, Operator
-from src.autora.theorist.toolkit.components.primitives import default_primitives
-from src.autora.theorist.toolkit.models.tree import Tree
-from src.autora.theorist.toolkit.models.memory import Stack
-from src.autora.theorist.toolkit.methods.fitting import scipy_curve_fit
-from src.autora.theorist.toolkit.methods.regression import regression_handler, canonical
-from src.autora.theorist.toolkit.methods.rules import less_than
+from autora.theorist.toolkit.components.nodes import Variable, Parameter, Operator
+from autora.theorist.toolkit.components.primitives import default_primitives
+from autora.theorist.toolkit.models.tree import Tree
+from autora.theorist.toolkit.models.memory import Stack
+from autora.theorist.toolkit.methods.fitting import scipy_curve_fit
+from autora.theorist.toolkit.methods.regression import regression_handler, canonical
+from autora.theorist.toolkit.methods.rules import less_than
 
 
 class SymbolicRegressor(BaseEstimator):
