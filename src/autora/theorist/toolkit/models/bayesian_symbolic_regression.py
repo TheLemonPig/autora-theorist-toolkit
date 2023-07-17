@@ -1,8 +1,8 @@
-from src.autora.theorist.toolkit.models.symbolic_regression import SymbolicRegressor
-from src.autora.theorist.toolkit.methods.rules import add_root, remove_root, replace_node
-from src.autora.theorist.toolkit.methods.metrics import minimum_description_length
-from src.autora.theorist.toolkit.methods.fitting import scipy_curve_fit
-from src.autora.theorist.toolkit.methods.regression import regression_handler
+from autora.theorist.toolkit.models.symbolic_regression import SymbolicRegressor
+from autora.theorist.toolkit.methods.rules import add_root, remove_root, replace_node
+from autora.theorist.toolkit.methods.metrics import minimum_description_length
+from autora.theorist.toolkit.methods.fitting import scipy_curve_fit
+from autora.theorist.toolkit.methods.regression import regression_handler
 import random
 
 
