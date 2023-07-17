@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.metrics import mean_squared_error
-from src.autora.theorist.toolkit.models.symbolic_regression import SymbolicRegressor
+from autora.theorist.toolkit.models.symbolic_regression import SymbolicRegressor
 
 
 def continuous_log_loss(mse):
