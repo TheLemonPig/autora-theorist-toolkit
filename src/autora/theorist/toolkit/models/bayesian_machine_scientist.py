@@ -1,11 +1,11 @@
 import numpy as np
 import logging
 from tqdm import tqdm
-from src.autora.theorist.toolkit.components.primitives import Arithmetic, SimpleFunction
-from src.autora.theorist.toolkit.methods.rules import replace_node
-from src.autora.theorist.toolkit.models.bayesian_symbolic_regression import BayesianSymbolicRegressor
-from src.autora.theorist.toolkit.methods.metrics import minimum_description_length
-from src.autora.theorist.toolkit.methods.regression import clean_equation
+from autora.theorist.toolkit.components.primitives import Arithmetic, SimpleFunction
+from autora.theorist.toolkit.methods.rules import replace_node
+from autora.theorist.toolkit.models.bayesian_symbolic_regression import BayesianSymbolicRegressor
+from autora.theorist.toolkit.methods.metrics import minimum_description_length
+from autora.theorist.toolkit.methods.regression import clean_equation
 from sklearn.metrics import mean_squared_error
 import random
 
