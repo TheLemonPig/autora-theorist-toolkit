@@ -1,6 +1,6 @@
 import functools
 import warnings
-from src.autora.theorist.toolkit.methods.fitting import FittingError
+from autora.theorist.toolkit.methods.fitting import FittingError
 from sympy import sympify
 from scipy.optimize import OptimizeWarning
 import functools
