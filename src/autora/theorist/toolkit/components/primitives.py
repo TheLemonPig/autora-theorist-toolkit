@@ -32,5 +32,13 @@ default_primitives: List = [
     Arithmetic(operator) for operator in ["+", "-", "*", "/", "**"]
 ]
 default_primitives += [
-    SimpleFunction(operator) for operator in ["np.sin", "np.cos", "np.exp", "np.log"]
+    SimpleFunction(operator)
+    for operator in [
+        "np.sin",
+        "np.cos",
+        "np.exp",
+        "np.log",
+        "np.heaviside",
+        "scipy.expit",
+    ]
 ]

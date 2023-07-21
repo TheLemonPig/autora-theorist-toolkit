@@ -6,6 +6,7 @@ from typing import List
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import scipy
 from sklearn.base import BaseEstimator
 from sklearn.metrics import mean_squared_error
 from tqdm import tqdm
@@ -267,7 +268,7 @@ class SymbolicRegressor(BaseEstimator):
             str(parameter): parameter.get_value()
             for parameter in self.model_.get_parameters()
         }
-        exec(func_str, {"np": np}, namespace)
+        exec(func_str, {"np": np, "scipy": scipy}, namespace)
         self._expression = namespace["func"]
         return "func", namespace
 

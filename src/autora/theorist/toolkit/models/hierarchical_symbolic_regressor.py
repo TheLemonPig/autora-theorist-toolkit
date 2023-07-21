@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import scipy
 from sklearn.metrics import mean_squared_error
 
 from autora.theorist.toolkit.methods.fitting import scipy_curve_fit
@@ -88,6 +89,6 @@ class HierarchicalSymbolicRegressor(SymbolicRegressor):
         func_str += "\t" + "= dic[id]" + "\n"
         func_str += "\t" + "return " + str_repr
         namespace = {}
-        exec(func_str, {"np": np, "dic": self.id_parameters}, namespace)
+        exec(func_str, {"np": np, "scipy": scipy, "dic": self.id_parameters}, namespace)
         self._expression = namespace["func"]
         return "func", namespace
