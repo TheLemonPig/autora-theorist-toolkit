@@ -24,7 +24,6 @@ def regression_handler(func):
 
 
 def canonical(expr_str: str):
-    expr_str = expr_str.replace("np.", "")
     expr_sym = sympify(expr_str)
     expr_str = str(expr_sym)
     while "__a" in expr_str:
@@ -35,6 +34,5 @@ def canonical(expr_str: str):
 
 
 def clean_equation(expr_str):
-    expr_str = expr_str.replace("np.", "")
     expr_sym = sympify(expr_str)
     return str(expr_sym)
