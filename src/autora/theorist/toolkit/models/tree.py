@@ -1,4 +1,4 @@
-from src.autora.theorist.toolkit.components.nodes import Symbol, Parameter
+from autora.theorist.toolkit.components.nodes import Symbol, Parameter
 from typing import List
 
 

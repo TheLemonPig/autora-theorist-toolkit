@@ -2,10 +2,10 @@ import numpy as np
 import logging
 from tqdm import tqdm
 import random
-from src.autora.theorist.toolkit.components.primitives import Arithmetic, SimpleFunction
-from src.autora.theorist.toolkit.models.symbolic_regression import SymbolicRegressor
-from src.autora.theorist.toolkit.methods.metrics import MinimumDescriptionLength
-from src.autora.theorist.toolkit.methods.rules import replace_node
+from autora.theorist.toolkit.components.primitives import Arithmetic, SimpleFunction
+from autora.theorist.toolkit.models.symbolic_regression import SymbolicRegressor
+from autora.theorist.toolkit.methods.metrics import MinimumDescriptionLength
+from autora.theorist.toolkit.methods.rules import replace_node
 
 logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger(__name__)
