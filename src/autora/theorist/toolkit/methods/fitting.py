@@ -1,8 +1,9 @@
-from sklearn.utils.validation import assert_all_finite
-import numpy as np
-from scipy.optimize import curve_fit, OptimizeWarning
-from typing import Callable
 import warnings
+from typing import Callable
+
+import numpy as np
+from scipy.optimize import OptimizeWarning, curve_fit
+from sklearn.utils.validation import assert_all_finite
 
 
 ###
@@ -21,7 +22,7 @@ def scipy_curve_fit(X: np.ndarray, y: np.ndarray, expr_func: Callable):
         assert_all_finite(fitted_parameters)
         return fitted_parameters
     except (ValueError, ZeroDivisionError, TypeError, RuntimeError) as err:
-        raise FittingError(err, 'scipy\'s curve fit failed')
+        raise FittingError(err, "scipy's curve fit failed")
 
 
 def fit_parameters(X: np.ndarray, y: np.ndarray, expr_func, fit_func=scipy_curve_fit):
@@ -29,7 +30,6 @@ def fit_parameters(X: np.ndarray, y: np.ndarray, expr_func, fit_func=scipy_curve
 
 
 class FittingError(Exception):
-
-    def __init__(self, err, message=''):
-        message += '\n'+str(err)
+    def __init__(self, err, message=""):
+        message += "\n" + str(err)
         super().__init__(message)

@@ -1,5 +1,6 @@
-from typing import List, Callable
 from inspect import signature
+from typing import Callable, List
+
 from autora.theorist.toolkit.components.primitives import Arithmetic
 
 ###############
@@ -14,20 +15,19 @@ from autora.theorist.toolkit.components.primitives import Arithmetic
 #   parent: Node object
 #   offspring: list of Node objects
 class TreeNode:
-
     def __init__(self, parent=None, children=None):
         self._parent: __class__.__name__ = parent
         self._children: List[__class__.__name__] = [] if children is None else children
 
     def __call__(self, x):
-        raise TypeError('Uninitialized Node cannot be evaluated')
+        raise TypeError("Uninitialized Node cannot be evaluated")
 
     def __getitem__(self, item):
         if isinstance(item, list):
             if len(item) > 0:
                 return self.__getitem__(item[0]).__getitem__(item[1:])
             else:
-                raise KeyError('Specified tree location does not exist')
+                raise KeyError("Specified tree location does not exist")
         else:
             if item == -1:
                 return self._parent
@@ -36,7 +36,7 @@ class TreeNode:
 
     # TODO: update __repr__ to collect node and all descendants
     def __repr__(self):
-        return '...'
+        return "..."
 
     def get_parent(self):
         return self._parent
@@ -74,11 +74,10 @@ class TreeNode:
 
 
 class Symbol(TreeNode):
-
     def __init__(self, parent=None, children=None):
         super().__init__(parent, children)
         self._value = None
-        self._label = 'R'
+        self._label = "R"
 
     def __repr__(self):
         return self._label
@@ -87,7 +86,9 @@ class Symbol(TreeNode):
         return self._value is not None
 
     def is_filled(self):
-        return self.is_initialized() and all(children.is_filled() for children in self.get_children())
+        return self.is_initialized() and all(
+            children.is_filled() for children in self.get_children()
+        )
 
     def get_value(self):
         return self._value
@@ -97,7 +98,6 @@ class Symbol(TreeNode):
 
 
 class Variable(Symbol):
-
     def __init__(self, value, parent=None):
         super().__init__(parent=parent)
         self._label = value
@@ -110,12 +110,14 @@ class Variable(Symbol):
             try:
                 return x[self._value]
             except KeyError:
-                raise KeyError('Data does not contain label for variable: ' +
-                               self._label+', nor is large enough to imply')
+                raise KeyError(
+                    "Data does not contain label for variable: "
+                    + self._label
+                    + ", nor is large enough to imply"
+                )
 
 
 class Parameter(Symbol):
-
     def __init__(self, value=0.0, parent=None):
         super().__init__(parent=parent, children=None)
         self._value: float = value
@@ -131,18 +133,30 @@ class Parameter(Symbol):
 
 
 class Operator(Symbol):
-
     def __init__(self, value, parent=None):
-        super().__init__(parent=parent,
-                         children=[Symbol(parent=self) for _ in signature(value).parameters])
+        super().__init__(
+            parent=parent,
+            children=[Symbol(parent=self) for _ in signature(value).parameters],
+        )
         self._value: Callable = value
         self._label: str = str(value)
 
     def __repr__(self):
         if isinstance(self._value, Arithmetic):
-            return '('+self._children[0].__repr__() + str(self._value) + self._children[1].__repr__()+')'
+            return (
+                "("
+                + self._children[0].__repr__()
+                + str(self._value)
+                + self._children[1].__repr__()
+                + ")"
+            )
         else:
-            return str(self._value) + '(' + ','.join(child.__repr__() for child in self.get_children()) + ')'
+            return (
+                str(self._value)
+                + "("
+                + ",".join(child.__repr__() for child in self.get_children())
+                + ")"
+            )
 
     def args(self):
         return signature(self._value).parameters

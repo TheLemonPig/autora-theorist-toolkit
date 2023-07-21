@@ -1,9 +1,8 @@
-from typing import List
+from typing import List, Optional
 
 
 class Stack:
-
-    def __init__(self, stack: List = None, limit: int = 10):
+    def __init__(self, stack: Optional[List] = None, limit: int = 10):
         self._list = list() if stack is None else stack
         self._max = limit
 
@@ -11,7 +10,7 @@ class Stack:
         try:
             return self._list.pop()
         except IndexError:
-            raise IndexError('No elements in stack to pop')
+            raise IndexError("No elements in stack to pop")
 
     def push(self, e):
         self._list.append(e)

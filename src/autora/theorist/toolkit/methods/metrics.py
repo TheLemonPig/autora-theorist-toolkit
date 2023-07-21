@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.metrics import mean_squared_error
+
 from autora.theorist.toolkit.models.symbolic_regression import SymbolicRegressor
 
 
@@ -20,23 +21,23 @@ def priors(prior_dict, expr_str):
     return prior
 
 
-def minimum_description_length(y_true, y_pred, n, k, prior_dict, expr_str, temperature=1.0):
+def minimum_description_length(
+    y_true, y_pred, n, k, prior_dict, expr_str, temperature=1.0
+):
     bic = continuous_bayesian_information_criterion(y_true, y_pred, n, k)
     prior = priors(prior_dict, expr_str)
-    return bic/2/temperature + prior
+    return bic / 2 / temperature + prior
 
 
 class Loss:
-
     def __init__(self):
         ...
 
     def __call__(self, y_true, y_pred) -> float:
-        ...
+        return 0.0
 
 
 class MinimumDescriptionLength:
-
     def __init__(self, n, k, prior_dict, expr_str, bic_temp=1, prior_temp=1):
         super().__init__()
         self.n = n
@@ -47,11 +48,12 @@ class MinimumDescriptionLength:
         self.prior_temp = prior_temp
 
     def __call__(self, y_true, y_pred) -> float:
-        return minimum_description_length(y_true, y_pred, self.n, self.k, self.prior_dict, self.expr_str)
+        return minimum_description_length(
+            y_true, y_pred, self.n, self.k, self.prior_dict, self.expr_str
+        )
 
 
 class MDLChange:
-
     def __init__(self, regressor: SymbolicRegressor, prior_dict, initial_mdl):
         self.regressor = regressor
         self.current_mdl = initial_mdl
@@ -61,16 +63,9 @@ class MDLChange:
         n = len(y_pred)
         k = len(self.regressor.model_.get_parameters())
         expr_str = str(self.regressor.model_)
-        new_mdl = minimum_description_length(y_true, y_pred, n, k, self.prior_dict, expr_str)
+        new_mdl = minimum_description_length(
+            y_true, y_pred, n, k, self.prior_dict, expr_str
+        )
         mdl_change = new_mdl - self.current_mdl
         self.current_mdl = new_mdl
         return mdl_change
-
-# class MDLChange(MDLLoss):
-#
-#     def __init__(self, n_old, n_new, k_old, k_new, prior_dict, expr_str_old, expr_str_new, bic_temp=1, prior_temp=1):
-#         self.old = super().__init__(n_old, k_old, prior_dict, expr_str_old, bic_temp, prior_temp)
-#         self.new = super().__init__(n_new, k_new, prior_dict, expr_str_new, bic_temp, prior_temp)
-#
-#     def __call__(self, y_true, y_pred) -> float:
-#         return self.new(y_true, y_pred) - self.old(y_true, y_pred)

@@ -1,5 +1,6 @@
-import numpy as np
 from random import random
+
+import numpy as np
 
 
 def less_than(a, b):
@@ -32,16 +33,18 @@ def bms_accept():
     ...
 
 
-rulebook = dict({
-    'None/Root': add_root,
-    'Root/None': remove_root,
-    'Node/Node': replace_node,
-    'Node/Leaf': replace_node,
-    'Leaf/Node': replace_node,
-    # 'Node/Leaf': replace_elementary_tree,
-    # 'Leaf/Node': replace_elementary_tree,
-    'Leaf/Leaf': replace_node,
-})
+rulebook = dict(
+    {
+        "None/Root": add_root,
+        "Root/None": remove_root,
+        "Node/Node": replace_node,
+        "Node/Leaf": replace_node,
+        "Leaf/Node": replace_node,
+        # 'Node/Leaf': replace_elementary_tree,
+        # 'Leaf/Node': replace_elementary_tree,
+        "Leaf/Leaf": replace_node,
+    }
+)
 
 # if __name__ == '__main__':
 #     print(less_than(3, 4))

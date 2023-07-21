@@ -1,5 +1,6 @@
-from autora.theorist.toolkit.components.nodes import Symbol, Parameter
 from typing import List
+
+from autora.theorist.toolkit.components.nodes import Parameter, Symbol
 
 
 ###
@@ -16,7 +17,6 @@ from typing import List
 # __call__: calls the object-oriented predict method above
 #
 class Tree:
-
     def __init__(self):
         super().__init__()
         self._root: Symbol = Symbol()
@@ -78,7 +78,7 @@ class Tree:
 
     # replace old node with new node
     def replace(self, old_node: Symbol, new_node: Symbol, **kwargs):
-        if 'NR' in kwargs:
+        if "NR" in kwargs:
             assert len(old_node.get_children()) == len(new_node.get_children())
             for i, child in enumerate(old_node.get_children()):
                 child.replace_parent(new_node)
@@ -109,7 +109,7 @@ class Tree:
                 self._label_parameter(node)
 
     def size(self):
-        return len(set([self._root]+self._nodes+self._leaves))
+        return len(set([self._root] + self._nodes + self._leaves))
 
     # reset node lists
     def _clear(self):
@@ -121,7 +121,7 @@ class Tree:
 
     def _label_parameter(self, node: Parameter):
         digit_label = 0
-        while '__a'+str(digit_label)+'__' in self._parameter_dict.keys():
+        while "__a" + str(digit_label) + "__" in self._parameter_dict.keys():
             digit_label += 1
-        node.label('__a'+str(digit_label)+'__')
+        node.label("__a" + str(digit_label) + "__")
         self._parameter_dict.update({str(node): node.get_value()})
