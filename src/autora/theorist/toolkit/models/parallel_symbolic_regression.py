@@ -19,7 +19,7 @@ class ParallelSymbolicRegressor:
         self.prior_dict = prior_dict
         self.theorists = [SymbolicRegressor() for _ in self.temperatures]
 
-    def fit(self, x, y):
+    def fit(self, x, y, epochs=100):
         n_swaps = 0
         for n in tqdm(range(epochs)):
             for i, theorist in enumerate(self.theorists):
@@ -74,7 +74,7 @@ if __name__ == '__main__':
         Arithmetic(operator) for operator in ['+', '-', '*', '/', '**']
     ]
     primitives += [SimpleFunction(operator) for operator in ['np.sin', 'np.cos', 'np.exp', 'np.log']]
-    epochs = 300
+    epochs_ = 300
     temps = [1.04 ** n for n in range(20)]
     # temperatures = [1.0]
     prior_dict_ = {'+': 10.0,
@@ -86,5 +86,5 @@ if __name__ == '__main__':
                    'exp': 0.01,
                    'log': 0.01}
     bsr = ParallelSymbolicRegressor(temperatures=temps, prior_dict=prior_dict_)
-    bsr.fit(x_, y_)
+    bsr.fit(x_, y_, epochs_)
 

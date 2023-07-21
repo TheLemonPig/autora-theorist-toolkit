@@ -82,9 +82,9 @@ class SymbolicRegressor(BaseEstimator):
         self.step(move=move)
         if not self.visited():
             self.optimize_parameters(X, y, fitter)
+            self._record_visit()
             y_pred = self.predict(X)
             error = metric(y, y_pred, *args, **kwargs)
-            self._record_visit()
             if accept(error, self._error):
                 self._error = error
             else:

@@ -12,10 +12,21 @@ import random
 logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger(__name__)
 
+prior_dict_ = {'+': 3.0,
+                   '-': 3.0,
+                   '*': 3.0,
+                   '/': 3.0,
+                   '**': 3.0,
+                   'sin': 10.0,
+                   'exp': 10.0,
+                   'log': 10.0}
+
+temperatures_ = [1.04 ** n for n in range(20)]
+
 
 class BayesianMachineScientist:
 
-    def __init__(self, temperatures, prior_dict):
+    def __init__(self, temperatures=temperatures_, prior_dict=prior_dict_):
         self.temperatures = temperatures
         self.prior_dict = prior_dict
         self.theorists = [BayesianSymbolicRegressor(prior_dict=prior_dict) for _ in self.temperatures]

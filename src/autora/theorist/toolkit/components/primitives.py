@@ -1,5 +1,5 @@
 
-class Operator:
+class Operation:
 
     def __init__(self, operator):
         self._operator = operator
@@ -11,7 +11,7 @@ class Operator:
         ...
 
 
-class SimpleFunction(Operator):
+class SimpleFunction(Operation):
 
     def __init__(self, operator):
         super().__init__(operator)
@@ -20,7 +20,7 @@ class SimpleFunction(Operator):
         return exec(f'{self._operator}{a}')
 
 
-class Arithmetic(Operator):
+class Arithmetic(Operation):
 
     def __init__(self, operator):
         super().__init__(operator)

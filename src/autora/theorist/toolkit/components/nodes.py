@@ -1,6 +1,6 @@
 from typing import List, Callable
 from inspect import signature
-from src.autora.theorist.toolkit.components.primitives import Arithmetic
+from autora.theorist.toolkit.components.primitives import Arithmetic
 
 ###############
 #       Objects

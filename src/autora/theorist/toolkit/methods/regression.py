@@ -1,6 +1,5 @@
-import functools
 import warnings
-from src.autora.theorist.toolkit.methods.fitting import FittingError
+from autora.theorist.toolkit.methods.fitting import FittingError
 from sympy import sympify
 from scipy.optimize import OptimizeWarning
 import functools
@@ -30,6 +29,7 @@ def canonical(expr_str: str):
         stop = expr_str.index('__', start+1) + 2
         expr_str = expr_str[:start]+'__c__'+expr_str[stop:]
     return expr_str
+
 
 def clean_equation(expr_str):
     expr_str = expr_str.replace('np.', '')
