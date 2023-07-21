@@ -1,9 +1,9 @@
-from src.autora.theorist.toolkit.models.symbolic_regression import SymbolicRegressor
-from src.autora.theorist.toolkit.models.parallel_symbolic_regression import ParallelSymbolicRegressor
-from src.autora.theorist.toolkit.models.bayesian_symbolic_regression import BayesianSymbolicRegressor
-from src.autora.theorist.toolkit.models.bayesian_machine_scientist import BayesianMachineScientist
-from src.autora.theorist.toolkit.models.tree import Tree
-from src.autora.theorist.toolkit.models.memory import Stack
+from autora.theorist.toolkit.models.symbolic_regression import SymbolicRegressor
+from autora.theorist.toolkit.models.parallel_symbolic_regression import ParallelSymbolicRegressor
+from autora.theorist.toolkit.models.bayesian_symbolic_regression import BayesianSymbolicRegressor
+from autora.theorist.toolkit.models.bayesian_machine_scientist import BayesianMachineScientist
+from autora.theorist.toolkit.models.tree import Tree
+from autora.theorist.toolkit.models.memory import Stack
 import numpy as np
 
 
