@@ -1,5 +1,17 @@
-class HierarchicalSymbolicRegressor(SymbolicRegressor):
+from copy import deepcopy
 
+import numpy as np
+import pandas as pd
+from sklearn.metrics import mean_squared_error
+
+from autora.theorist.toolkit.methods.fitting import scipy_curve_fit
+from autora.theorist.toolkit.methods.regression import regression_handler
+from autora.theorist.toolkit.methods.rules import less_than
+from autora.theorist.toolkit.models.memory import Stack
+from autora.theorist.toolkit.models.symbolic_regression import SymbolicRegressor
+
+
+class HierarchicalSymbolicRegressor(SymbolicRegressor):
     def __init__(self, primitives=None):
         super().__init__(primitives=primitives)
         self.ids = list()
@@ -10,14 +22,20 @@ class HierarchicalSymbolicRegressor(SymbolicRegressor):
         if isinstance(x, pd.DataFrame) and isinstance(y, pd.DataFrame):
             dv_variables, iv_variables = x.columns, y.columns
         elif isinstance(x, np.ndarray):
-            dv_variables = ['_x' + str(i) + '_' for i in range(x.shape[1])]
-            iv_variables = ['_y' + str(i) + '_' for i in range(y.shape[1])]
+            dv_variables = ["_x" + str(i) + "_" for i in range(x.shape[1])]
+            iv_variables = ["_y" + str(i) + "_" for i in range(y.shape[1])]
         else:
-            raise TypeError('Only valid types for x and y are pandas DataFrames and Numpy nd-arrays')
-        self.DVs = {dv_variables[i]: np.array(x[:, i]) for i in range(len(dv_variables))}
-        self.IVs = {iv_variables[i]: np.array(y[:, i]) for i in range(len(iv_variables))}
+            raise TypeError(
+                "Only valid types for x and y are pandas DataFrames and Numpy nd-arrays"
+            )
+        self.DVs = {
+            dv_variables[i]: np.array(x[:, i]) for i in range(len(dv_variables))
+        }
+        self.IVs = {
+            iv_variables[i]: np.array(y[:, i]) for i in range(len(iv_variables))
+        }
         self.ids = np.unique(g)
-        self.id_parameters = dict.fromkeys(self.ids, [0.])
+        self.id_parameters = dict.fromkeys(self.ids, [0.0])
         self._variables = dv_variables
 
     def cache(self):
@@ -44,8 +62,17 @@ class HierarchicalSymbolicRegressor(SymbolicRegressor):
         self.id_parameters.update({id: parameters})
 
     @regression_handler
-    def hierarchical_fit_step(self, X, y, g,
-                              fitter=scipy_curve_fit, metric=mean_squared_error, accept=less_than, *args, **kwargs):
+    def hierarchical_fit_step(
+        self,
+        X,
+        y,
+        g,
+        fitter=scipy_curve_fit,
+        metric=mean_squared_error,
+        accept=less_than,
+        *args,
+        **kwargs
+    ):
         self.step()
         if not self.visited():
             self.optimize_parameters(X, y, g, fitter)

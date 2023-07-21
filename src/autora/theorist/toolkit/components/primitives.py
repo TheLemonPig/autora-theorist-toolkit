@@ -1,4 +1,5 @@
 from typing import List
+
 import numpy as np
 import scipy
 
@@ -22,6 +23,14 @@ class SimpleFunction(Operation):
     def __call__(self, a):
         return exec(f"{self._operator}{a}", {self._operator: self._func})
 
+    def __getitem__(self, item):
+        if item == 0:
+            return self._operator
+        elif item == 1:
+            return self._func
+        else:
+            raise KeyError(f"Invalid key to {self.__class__.__name__}")
+
 
 class Arithmetic(Operation):
     def __init__(self, operator):
@@ -42,6 +51,6 @@ default_primitives += [
         "exp": np.exp,
         "log": np.log,
         "heaviside": np.heaviside,
-        "expit": scipy.expit,
-        }
+        "expit": scipy.special.expit,
+    }
 ]

@@ -11,7 +11,10 @@ from sklearn.metrics import mean_squared_error
 from tqdm import tqdm
 
 from autora.theorist.toolkit.components.nodes import Operator, Parameter, Variable
-from autora.theorist.toolkit.components.primitives import default_primitives, SimpleFunction
+from autora.theorist.toolkit.components.primitives import (
+    SimpleFunction,
+    default_primitives,
+)
 from autora.theorist.toolkit.methods.fitting import scipy_curve_fit
 from autora.theorist.toolkit.methods.regression import canonical, regression_handler
 from autora.theorist.toolkit.methods.rules import less_than
@@ -28,8 +31,11 @@ class SymbolicRegressor(BaseEstimator):
         self.model_ = Tree() if tree is None else tree
         self.metric = mean_squared_error if metric is None else metric
         self._primitives = default_primitives if primitives is None else primitives
-        self._custom_primitives = {primitive[0]:primitive[1] for primitive in default_primitives
-                                   if isinstance(primitive, SimpleFunction)]
+        self._custom_primitives = {
+            primitive[0]: primitive[1]
+            for primitive in default_primitives
+            if isinstance(primitive, SimpleFunction)
+        }
         self._expression = None
         self._value = None
         self._cache: Stack = Stack()

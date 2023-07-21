@@ -6,6 +6,9 @@ from autora.theorist.toolkit.models.bayesian_machine_scientist import (
 from autora.theorist.toolkit.models.bayesian_symbolic_regression import (
     BayesianSymbolicRegressor,
 )
+from autora.theorist.toolkit.models.hierarchical_bayesian_symbolic_regression import (
+    HierarchicalBayesianSymbolicRegression,
+)
 from autora.theorist.toolkit.models.memory import Stack
 from autora.theorist.toolkit.models.parallel_symbolic_regression import (
     ParallelSymbolicRegressor,
@@ -43,11 +46,12 @@ def test_parallel_symbolic_regression_initialization():
 
 
 def test_bayesian_machine_scientist_initialization():
-    prior_dict_ = {"+": 1.0}
-    temperatures_ = [1.04**t for t in range(20)]
-    theorist = BayesianMachineScientist(
-        temperatures=temperatures_, prior_dict=prior_dict_
-    )
+    theorist = BayesianMachineScientist()
+    assert theorist is not None
+
+
+def test_hbsr_running():
+    theorist = HierarchicalBayesianSymbolicRegression()
     assert theorist is not None
 
 
