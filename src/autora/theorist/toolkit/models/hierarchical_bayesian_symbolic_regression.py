@@ -4,6 +4,7 @@ import random
 import numpy as np
 from tqdm import tqdm
 
+from autora.theorist.toolkit.components.primitives import default_primitives
 from autora.theorist.toolkit.methods.metrics import MinimumDescriptionLength
 from autora.theorist.toolkit.methods.rules import replace_node
 from autora.theorist.toolkit.models.hierarchical_symbolic_regressor import (
@@ -29,11 +30,16 @@ temperatures_ = [1.04**n for n in range(20)]
 
 class HierarchicalBayesianSymbolicRegression:
     def __init__(self, temperatures=None, prior_dict=None, primitives=None):
-        self.primitives = primitives
         self.temperatures = temperatures_ if temperatures is None else temperatures
         self.prior_dict = prior_dict_ if prior_dict is None else prior_dict
+        primitives_ = default_primitives if primitives is None else primitives
+        self.primitives = [
+            primitive
+            for primitive in primitives_
+            if str(primitive) in list(self.prior_dict.keys())
+        ]
         self.theorists = [
-            HierarchicalSymbolicRegressor(primitives=primitives)
+            HierarchicalSymbolicRegressor(primitives=self.primitives)
             for _ in self.temperatures
         ]
 

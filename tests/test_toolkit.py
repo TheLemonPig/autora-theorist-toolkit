@@ -1,4 +1,5 @@
 import numpy as np
+import scipy
 
 from autora.theorist.toolkit.models.bayesian_machine_scientist import (
     BayesianMachineScientist,
@@ -50,9 +51,25 @@ def test_bayesian_machine_scientist_initialization():
     assert theorist is not None
 
 
-def test_hbsr_running():
-    theorist = HierarchicalBayesianSymbolicRegression()
-    assert theorist is not None
+def test_hsbr_prior_restriction_and_fitting():
+    prior_dict_ = {"+": 1.0, "expit": 1.0}
+    hsbr = HierarchicalBayesianSymbolicRegression(prior_dict=prior_dict_)
+    assert len(hsbr.theorists[-1]._primitives) > 0
+    x = scipy.special.expit(np.linspace(0, 1, 100)).reshape((-1, 1))
+    y = 1 + x
+    g = np.ones_like(x)
+    hsbr.fit(x, y, g, epochs=30)
+    assert "-" not in hsbr.theorists[-1].model_
+    assert "*" not in hsbr.theorists[-1].model_
+    assert "**" not in hsbr.theorists[-1].model_
+    assert "/" not in hsbr.theorists[-1].model_
+    assert "cos" not in hsbr.theorists[-1].model_
+    assert "exp" not in hsbr.theorists[-1].model_
+    assert "log" not in hsbr.theorists[-1].model_
+    assert "sin" not in hsbr.theorists[-1].model_
+    assert (
+        np.sum(hsbr.theorists[-1].predict(x, g) - y) == 0
+    ), f"{hsbr.theorists[-1].model_} but should be 1+expit(x)"
 
 
 if __name__ == "__main__":

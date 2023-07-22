@@ -52,5 +52,5 @@ default_primitives += [
         "log": np.log,
         "heaviside": np.heaviside,
         "expit": scipy.special.expit,
-    }
+    }.items()
 ]
