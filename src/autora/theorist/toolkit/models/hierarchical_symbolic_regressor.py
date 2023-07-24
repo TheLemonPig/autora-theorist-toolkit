@@ -47,7 +47,7 @@ class HierarchicalSymbolicRegressor(SymbolicRegressor):
         super().back_step()
 
     def get_id_data(self, g, id, x, y=None):
-        id_x = x[g == id]
+        id_x = x[(g == id)[:, 0], :]
         if len(id_x.shape) == 1:
             id_x = id_x.reshape((-1, 1))
         if y is None:

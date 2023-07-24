@@ -51,25 +51,34 @@ def test_bayesian_machine_scientist_initialization():
     assert theorist is not None
 
 
-def test_hsbr_prior_restriction_and_fitting():
+def test_hbsr_prior_restriction_and_fitting():
     prior_dict_ = {"+": 1.0, "expit": 1.0}
-    hsbr = HierarchicalBayesianSymbolicRegression(prior_dict=prior_dict_)
-    assert len(hsbr.theorists[-1]._primitives) > 0
+    hbsr = HierarchicalBayesianSymbolicRegression(prior_dict=prior_dict_)
+    assert len(hbsr.theorists[-1]._primitives) > 0
     x = scipy.special.expit(np.linspace(0, 1, 100)).reshape((-1, 1))
     y = 1 + x
     g = np.ones_like(x)
-    hsbr.fit(x, y, g, epochs=30)
-    assert "-" not in hsbr.theorists[-1].model_
-    assert "*" not in hsbr.theorists[-1].model_
-    assert "**" not in hsbr.theorists[-1].model_
-    assert "/" not in hsbr.theorists[-1].model_
-    assert "cos" not in hsbr.theorists[-1].model_
-    assert "exp" not in hsbr.theorists[-1].model_
-    assert "log" not in hsbr.theorists[-1].model_
-    assert "sin" not in hsbr.theorists[-1].model_
+    hbsr.fit(x, y, g, epochs=30)
+    assert "-" not in hbsr.theorists[-1].model_
+    assert "*" not in hbsr.theorists[-1].model_
+    assert "**" not in hbsr.theorists[-1].model_
+    assert "/" not in hbsr.theorists[-1].model_
+    assert "cos" not in hbsr.theorists[-1].model_
+    assert "exp" not in hbsr.theorists[-1].model_
+    assert "log" not in hbsr.theorists[-1].model_
+    assert "sin" not in hbsr.theorists[-1].model_
     assert (
-        np.sum(hsbr.theorists[-1].predict(x, g) - y) == 0
-    ), f"{hsbr.theorists[-1].model_} but should be 1+expit(x)"
+        np.sum(hbsr.theorists[-1].predict(x, g) - y) == 0
+    ), f"{hbsr.theorists[-1].model_} but should be 1+expit(x)"
+
+
+def test_hbsr_multi_x():
+    x = np.linspace(0, 1, 200).reshape((-1, 2))
+    y = 1 + x[:, 0] + x[:, 1]
+    y = y.reshape((-1, 1))
+    g = np.ones_like(y)
+    hbsr = HierarchicalBayesianSymbolicRegression()
+    hbsr.fit(x=x, y=y, g=g, epochs=30)
 
 
 if __name__ == "__main__":
@@ -77,3 +86,4 @@ if __name__ == "__main__":
     test_bayesian_symbolic_regression_initialization()
     test_parallel_symbolic_regression_initialization()
     test_bayesian_machine_scientist_initialization()
+    test_hbsr_multi_x()
