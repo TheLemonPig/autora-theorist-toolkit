@@ -29,7 +29,9 @@ temperatures_ = [1.04**n for n in range(20)]
 
 
 class HierarchicalBayesianSymbolicRegression:
-    def __init__(self, temperatures=None, prior_dict=None, primitives=None):
+    def __init__(self, temperatures=None, prior_dict=None, primitives=None, seed=0):
+        self.seed = seed
+        np.random.seed(seed)
         self.temperatures = temperatures_ if temperatures is None else temperatures
         self.prior_dict = prior_dict_ if prior_dict is None else prior_dict
         primitives_ = default_primitives if primitives is None else primitives
@@ -39,7 +41,7 @@ class HierarchicalBayesianSymbolicRegression:
             if str(primitive) in list(self.prior_dict.keys())
         ]
         self.theorists = [
-            HierarchicalSymbolicRegressor(primitives=self.primitives)
+            HierarchicalSymbolicRegressor(primitives=self.primitives, seed=self.seed)
             for _ in self.temperatures
         ]
 

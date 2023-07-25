@@ -12,11 +12,12 @@ from autora.theorist.toolkit.models.symbolic_regression import SymbolicRegressor
 
 
 class HierarchicalSymbolicRegressor(SymbolicRegressor):
-    def __init__(self, primitives=None):
-        super().__init__(primitives=primitives)
+    def __init__(self, primitives=None, seed=0):
+        super().__init__(primitives=primitives, seed=seed)
         self.ids = list()
         self.id_parameters = dict()
         self.parameter_cache = Stack()
+        np.random.seed(seed)
 
     def load_data(self, x, y, g):
         if isinstance(x, pd.DataFrame) and isinstance(y, pd.DataFrame):

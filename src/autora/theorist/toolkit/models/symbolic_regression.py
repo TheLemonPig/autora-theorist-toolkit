@@ -25,7 +25,7 @@ from autora.theorist.toolkit.models.tree import Tree
 class SymbolicRegressor(BaseEstimator):
 
     # TODO: replace tree=None with expression=None once build_tree() is made
-    def __init__(self, tree=None, moves=None, primitives=None, metric=None):
+    def __init__(self, tree=None, moves=None, primitives=None, metric=None, seed=0):
         self.DVs = dict()  # currently unused
         self.IVs = dict()  # currently unused
         self.model_ = Tree() if tree is None else tree
@@ -57,6 +57,7 @@ class SymbolicRegressor(BaseEstimator):
         self._history = []
         self._visit_list = set()
         self._error = np.inf
+        np.random.seed(seed)
 
     def __repr__(self, N_CHAR_MAX=None):
         if N_CHAR_MAX is None:

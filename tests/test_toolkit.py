@@ -81,6 +81,17 @@ def test_hbsr_multi_x():
     hbsr.fit(x=x, y=y, g=g, epochs=30)
 
 
+def test_hbsr_seed():
+    hbsr1 = HierarchicalBayesianSymbolicRegression(seed=1)
+    hbsr2 = HierarchicalBayesianSymbolicRegression(seed=2)
+    for _ in range(25):
+        hbsr1.theorists[-1].step()
+        hbsr2.theorists[-1].step()
+    assert str(hbsr1.theorists[-1].model_) != str(
+        hbsr2.theorists[-1].model_
+    ), f"{str(hbsr1.theorists[-1].model_)} {str(hbsr2.theorists[-1].model_)}"
+
+
 if __name__ == "__main__":
     test_symbolic_regression_initialization()
     test_bayesian_symbolic_regression_initialization()
