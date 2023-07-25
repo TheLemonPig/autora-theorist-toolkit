@@ -44,6 +44,7 @@ class HierarchicalBayesianSymbolicRegression:
             HierarchicalSymbolicRegressor(primitives=self.primitives, seed=self.seed)
             for _ in self.temperatures
         ]
+        self.model_ = self.theorists[-1]
 
     def fit(self, x, y, g, epochs=100, verbose=False):
         n_swaps = 0

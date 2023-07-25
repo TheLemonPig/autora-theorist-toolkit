@@ -92,6 +92,11 @@ def test_hbsr_seed():
     ), f"{str(hbsr1.theorists[-1].model_)} {str(hbsr2.theorists[-1].model_)}"
 
 
+def test_hbsr_model_():
+    hbsr = HierarchicalBayesianSymbolicRegression()
+    assert hasattr(hbsr, "model_") and hbsr.model_ is not None
+
+
 if __name__ == "__main__":
     test_symbolic_regression_initialization()
     test_bayesian_symbolic_regression_initialization()
